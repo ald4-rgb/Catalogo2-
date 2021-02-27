@@ -1,0 +1,26 @@
+.menu  {
+  background-color: #020202a8;
+  overflow: hidden;
+  color: #ffffff;
+
+  height: 2rem;
+}
+.menu ul{
+
+  display: flex;
+  list-style-type:none;
+}
+ li:hover{
+  text-align: center;
+  background-color:#bb8103e8 ;
+  height: 2rem;
+  transition: all 1s;
+}
+
+  a{
+  text-decoration: none;
+  color:#fff;
+
+  padding:10px ;
+  margin: 0 5px;
+}
