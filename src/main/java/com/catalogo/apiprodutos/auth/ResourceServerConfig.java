@@ -22,8 +22,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers(HttpMethod.GET,"/catalogo/usuarios").
-		permitAll().antMatchers(HttpMethod.POST,"/catalogo/registro").permitAll().
+		http.authorizeRequests().antMatchers(HttpMethod.GET,"/catalogo/usuarios","/catalogo/usuarios/{id}","/catalogo/registro/regiones","/catalogo/uploads/img/**","/images/**").
+		permitAll().antMatchers(HttpMethod.POST,"/catalogo/registro","/catalogo/usuarios/upload/**").permitAll().antMatchers(HttpMethod.PUT,"/catalogo/usuarios/{id}").permitAll().
 		anyRequest().authenticated().and().cors().configurationSource(corsConfigurationSource());
 	}
 
@@ -32,10 +32,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 		CorsConfiguration config = new CorsConfiguration();
 
-		config.setAllowedOrigins(Arrays.asList("localhost/4200/", "*"));
-		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+		config.setAllowedOrigins(Arrays.asList("http://localhost:4200","*"));
+		config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS"));
 		config.setAllowCredentials(true);
-		config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));
+		config.setAllowedHeaders(Arrays.asList("Content-Type","Authorization"));
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		source.registerCorsConfiguration("/**", config);
 		return source;
@@ -44,8 +44,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 	@Bean
 	public FilterRegistrationBean<CorsFilter> corsFilter() {
 
-		FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<CorsFilter>(
-				new CorsFilter(corsConfigurationSource()));
+		FilterRegistrationBean<CorsFilter> bean = new FilterRegistrationBean<CorsFilter>
+		(new CorsFilter(corsConfigurationSource()));
 		bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
 		return bean;
 

@@ -11,6 +11,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 
 import com.catalogo.apiprodutos.models.entity.Usuario;
+
 import com.catalogo.apiprodutos.models.services.IUsuarioService;
 
 @Component
@@ -22,17 +23,16 @@ public class InfoAdicionalToken implements TokenEnhancer {
 	@Override
 	public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 
-		Usuario usuario = usuarioService.findByUsername(authentication.getName());
+		Usuario user = usuarioService.findByUsername(authentication.getName());
 
 		Map<String, Object> info = new HashMap<>();
 
 		info.put("info_adicional", "Hola bienvenido: ".concat(authentication.getName()));
-		info.put("nombre", usuario.getName());
-		info.put("apellido", usuario.getLastName());
-		info.put("email", usuario.getEmail());
-
+		info.put("id", user.getId());
+		info.put("name", user.getName());
+		info.put("lastName", user.getLastName());
+		info.put("email", user.getEmail());
 		((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(info);
-
 		return accessToken;
 	}
 

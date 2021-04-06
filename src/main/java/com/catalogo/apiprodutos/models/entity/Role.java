@@ -19,6 +19,7 @@ public class Role implements Serializable {
 	@Column(unique = true , length = 20 )
 	private String name;
 	
+	
 	public Role() {
 		
 	}

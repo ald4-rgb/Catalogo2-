@@ -1,10 +1,13 @@
 package com.catalogo.apiprodutos.models.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 //import org.springframework.data.jdbc.repository.query.Query;
 //import org.springframework.data.repository.CrudRepository;
 
+import com.catalogo.apiprodutos.models.entity.Region;
 import com.catalogo.apiprodutos.models.entity.Usuario;
 
 public interface IUsuarioDao extends JpaRepository<Usuario, Long> {
@@ -12,11 +15,10 @@ public interface IUsuarioDao extends JpaRepository<Usuario, Long> {
 	
 	public Usuario findByUsername (String username );
 	
-	//consulta con sentencia sql 
+	@Query("from Region")
+	public List<Region>findAllRegiones();
 	
-	/*consulta sql con un alias */
+	public Region findByName(String name);
+		
 	
-	@Query("select u from Usuario u where  u.username=?1")
-	public Usuario findByUsername2(String username );
-
 }

@@ -1,4 +1,4 @@
-package com.catalogo.apiprodutos.models.services;
+	package com.catalogo.apiprodutos.models.services;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.catalogo.apiprodutos.models.dao.IUsuarioDao;
+import com.catalogo.apiprodutos.models.entity.Region;
 import com.catalogo.apiprodutos.models.entity.Usuario;
 
 @Service
@@ -33,29 +34,31 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Usuario> findAll() {
-
 		return (List<Usuario>) usuarioDao.findAll();
 	}
 
 	@Override
-	public Usuario findyId(Long id) {
-
+	public Usuario findById(Long id) {
 		return usuarioDao.findById(id).orElse(null);
 	}
+	
 
-/*	@Override
-	public Usuario save(Usuario usuario) {
-		
-		return usuarioDao.save(usuario);
-	}*/
 	@Override
 	public Usuario saveRole(Usuario usuario) {
-		
 		
 		return usuarioDao.save(usuario);
 	}
 	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Region> findAllRegiones() {
+
+		return usuarioDao.findAllRegiones();
+	}
+	
+
 	@Override
 	@Transactional(readOnly = true)
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -69,11 +72,8 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 				.map(role -> new SimpleGrantedAuthority(role.getName()))
 				.peek(authority -> logger.info("Role" + authority.getAuthority())).collect(Collectors.toList());
 
-		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(), true, true, true,
-				authorities);
+		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(),true, true, true,authorities);
 
 	}
-
-
-
+	
 }

@@ -9,16 +9,16 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.catalogo.apiprodutos.models.services.UsuarioService;
 
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @Configuration
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
-	private UsuarioService usuarioService;
+	private UserDetailsService usuarioService;
 
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
@@ -32,7 +32,7 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		auth.userDetailsService(this.usuarioService).passwordEncoder(passwordEncoder());
 	}
-
+	
 	@Bean("authenticationManager")
 	@Override
 	protected AuthenticationManager authenticationManager() throws Exception {
@@ -45,12 +45,6 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		http.authorizeRequests().anyRequest().authenticated().and().csrf().disable().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-	}
-
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-
-		return super.authenticationManagerBean();
 	}
 
 }

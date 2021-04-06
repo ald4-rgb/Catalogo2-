@@ -18,7 +18,7 @@ public class CatalogoApplication implements CommandLineRunner {
 
 	public void run(String... args)throws Exception{
 		
-		String password = "admin"; 
+		String password = "12345"; 
 		for (int i=0 ; i < 5 ; i++ ) {
 			
 			String passwordBCrypt = passwordEncoder.encode(password);

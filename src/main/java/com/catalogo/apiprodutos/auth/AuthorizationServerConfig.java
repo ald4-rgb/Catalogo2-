@@ -37,8 +37,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 		clients.inMemory().withClient("angularapp")
-		.secret(passwordEncoder.encode("12345")).scopes("read","write")
-		.authorizedGrantTypes("password","refresh_token")
+		.secret(passwordEncoder.encode("12345"))
+		.scopes("read","write")
+		.authorizedGrantTypes("password", "refresh_token")
 		.accessTokenValiditySeconds(8800)
 		.refreshTokenValiditySeconds(8800);
 	
@@ -51,12 +52,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 		.tokenStore(tokenStore())
 		.accessTokenConverter(accessTokenConverter())
 		.tokenEnhancer(tokenEnhancerChain);
-		
 	}
-	
+
 	@Bean
-	public JwtTokenStore tokenStore() {
-		
+	public JwtTokenStore tokenStore() {		
 		return new JwtTokenStore(accessTokenConverter());
 		
 	}
