@@ -17,6 +17,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+//import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -51,11 +52,12 @@ public class UsuarioRestController {
 	private BCryptPasswordEncoder passwordEncoder;
 
 	
-	
+//	@Secured({"ROLE_ADMIN"})
 	@GetMapping("/usuarios")
 	public List<Usuario> index() {
 		return usuarioService.findAll();
 	}
+//	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@GetMapping("/usuarios/{id}")
 	public  ResponseEntity<?> show(@PathVariable Long id){
 		Usuario user = null;
@@ -79,11 +81,23 @@ public class UsuarioRestController {
 		return new ResponseEntity<Usuario>(user,HttpStatus.OK);
 	}
 	
+	@GetMapping("/usuarios/roles")
+	public List<Role> listaRoles(){
+		return usuarioService.findAllRoles();
+	}
+	
 	
 	@GetMapping("/registro/regiones")
 	public List<Region> listaRegiones(){
 		return usuarioService.findAllRegiones();
 	}
+//	@Secured({"ROLE_USER","ROLE_ADMIN"})
+	@GetMapping("/usuarios/regiones")
+	public List<Region> listaRegiones2(){
+		return usuarioService.findAllRegiones();
+	}
+	
+	
 	
 	@PostMapping("/registro")
 	public ResponseEntity<?> create(@Valid @RequestBody Usuario usuario, BindingResult result) {
@@ -117,7 +131,7 @@ public class UsuarioRestController {
 		response.put("usuario", usuarioNew);
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
-	
+//	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@PutMapping("/usuarios/{id}")
 	public ResponseEntity<?> setup(@Valid @RequestBody Usuario usuario, BindingResult result,@PathVariable Long id) {
 
@@ -157,12 +171,12 @@ public class UsuarioRestController {
 		return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 	}
 	
-	
+//	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	@PostMapping("/usuarios/upload")
 	public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("id") Long id) {
 
 		Map<String, Object> response = new HashMap<>();
-		Usuario usuario = usuarioService.findById(id);
+		Usuario user = usuarioService.findById(id);
 		
 			if(!file.isEmpty()) {
 				String fileName = null;
@@ -175,11 +189,11 @@ public class UsuarioRestController {
 					response.put("error",e.getMessage());
 					return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 				}				
-				String fileNameBeforePicture =  usuario.getFoto();
+				String fileNameBeforePicture =  user.getFoto();
 				uploadUsuarioFileService.delate(fileNameBeforePicture);
-				usuario.setFoto(fileName);
-				usuarioService.saveRole(usuario);
-				response.put("usuario", usuario);
+				user.setFoto(fileName);
+				usuarioService.saveRole(user);
+				response.put("user", user);
 				response.put("mensaje", "Su foto de perfil fue subida con exito..."+fileName);
 			}
 		

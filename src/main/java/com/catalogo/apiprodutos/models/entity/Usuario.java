@@ -1,6 +1,7 @@
-	package com.catalogo.apiprodutos.models.entity;
+package com.catalogo.apiprodutos.models.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,11 +15,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -58,15 +61,23 @@ public class Usuario implements Serializable {
 			@UniqueConstraint(columnNames = { "usuario_id", "role_id" }) })
 	private List<Role> roles;
 
+	@JsonIgnoreProperties(value= {"usuario","hibernateLazyInitializer","handler"},allowSetters = true)
+	@OneToMany(fetch = FetchType.LAZY,mappedBy ="usuario" )
+	private List<Pedido> pedidos;
 	
-	//@NotNull(message ="region no puede quedar vacio")
+	
+	
+	@NotNull(message ="region no puede quedar vacio")
 	@ManyToOne(fetch = FetchType.LAZY )
 	@JoinColumn(name="region_id")
-	@JsonIgnoreProperties(value = {"usuario" ,"hibernateLazyInitializer","handler"})
+	@JsonIgnoreProperties(value = {"hibernateLazyInitializer","handler"})
 	private Region region;
 	
 	private String 	foto;
 	
+	public Usuario() {
+		pedidos= new  ArrayList<Pedido>();
+	}
 
 	public Long getId() {
 		return id;
@@ -157,6 +168,15 @@ public class Usuario implements Serializable {
 		this.roles = roles;
 	}
 
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
 	public String getFoto() {
 		return foto;
 	}
@@ -164,6 +184,11 @@ public class Usuario implements Serializable {
 	public void setFoto(String foto) {
 		this.foto = foto;
 	}
+	
+
+	
+
+
 
 	private static final long serialVersionUID = 1L;
 

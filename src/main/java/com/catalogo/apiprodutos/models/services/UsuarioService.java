@@ -15,8 +15,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.catalogo.apiprodutos.models.dao.IPedidoDao;
+import com.catalogo.apiprodutos.models.dao.IProductoDao;
 import com.catalogo.apiprodutos.models.dao.IUsuarioDao;
+import com.catalogo.apiprodutos.models.entity.Pedido;
+import com.catalogo.apiprodutos.models.entity.Producto;
 import com.catalogo.apiprodutos.models.entity.Region;
+import com.catalogo.apiprodutos.models.entity.Role;
 import com.catalogo.apiprodutos.models.entity.Usuario;
 
 @Service
@@ -26,11 +31,21 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 
 	@Autowired
 	private IUsuarioDao usuarioDao;
+	
+	  @Autowired private IPedidoDao pedidoDao;
+	  
+	  @Autowired private IProductoDao productoDao;
+	 
 
 	@Override
 	@Transactional(readOnly = true)
 	public Usuario findByUsername(String username) {
 		return usuarioDao.findByUsername(username);
+	}
+
+	@Override
+	public List<Role> findAllRoles() {
+		return usuarioDao.findAllRoles();
 	}
 
 	@Override
@@ -44,7 +59,6 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 		return usuarioDao.findById(id).orElse(null);
 	}
 	
-
 	@Override
 	public Usuario saveRole(Usuario usuario) {
 		
@@ -75,5 +89,29 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(),true, true, true,authorities);
 
 	}
+
+	
+	  @Override
+	  
+	  @Transactional(readOnly = true) 
+	  public Pedido findPedidoById(Long id) {
+	  return pedidoDao.findById(id).orElse(null); }
+	  @Override
+	  
+	  @Transactional public Pedido savePedido(Pedido pedido) { return
+	  pedidoDao.save(pedido); }
+	  
+	  @Override
+	  
+	  @Transactional 
+	  public void deletePedidoById(Long id) {
+	  pedidoDao.deleteById(id); 
+	  }
+	  
+	  @Override
+	  
+	  @Transactional public List<Producto> findProductoByName(String term) {
+	  return productoDao.findByName(term); }
+	 
 	
 }

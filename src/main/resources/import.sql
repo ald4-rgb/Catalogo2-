@@ -32,15 +32,6 @@ INSERT INTO regiones (id,name) values ('31','Zacatecas: Zacatecas')
 INSERT INTO regiones (id,name) values ('32','CD MX')
 
 
-
-
-
-
-
-
-
-
-
 INSERT INTO `usuarios` (region_id,username, password, enabled,name,last_name,last_name_sec,date_born,email) VALUES(32,'ADMIN','$2a$10$DPQT4opFy9vQtOzE42WUu.aarJLoe793m9DHsP3pZCLVExJGuBkaG',1 ,'Joe','bored','Castro','1995/7/1','joesgreen@gmail.com');
 
 
@@ -50,7 +41,33 @@ INSERT INTO `usuarios` (region_id,username, password, enabled,name,last_name,las
 INSERT INTO `roles`  (name) Values('ROLE_USER'); 
 INSERT INTO `roles`  (name) Values('ROLE_ADMIN');
 
-INSERT INTO `usuarios_roles`(usuario_id, role_id) VALUES(1,1);
-INSERT INTO `usuarios_roles`(usuario_id, role_id) VALUES(2,2);
 INSERT INTO `usuarios_roles`(usuario_id, role_id) VALUES(1,2);
+INSERT INTO `usuarios_roles`(usuario_id, role_id) VALUES(1,1);
+INSERT INTO `usuarios_roles`(usuario_id, role_id) VALUES(2,1);
+
+
+
+INSERT INTO pedidos(descrip,coment,usuario_id,create_at) VALUES('Equipo personal de computo',null,2,NOW());
+
+INSERT INTO productos(name,create_at,price) VALUES('Hp pavilion core i7',NOW(),25000);
+INSERT INTO productos(name,create_at,price) VALUES('teniss adidas',NOW(),1200);
+INSERT INTO productos(name,create_at,price) VALUES('teniss nike',NOW(),1550);
+INSERT INTO productos(name,create_at,price) VALUES('Macbook',NOW(),16000);
+INSERT INTO productos(name,create_at,price) VALUES('Dell xps',NOW(),25000);
+INSERT INTO productos(name,create_at,price) VALUES('Fc Barcelona Playera',NOW(),12000);
+INSERT INTO productos(name,create_at,price) VALUES('Real Madrid  Playera',NOW(),12000);
+INSERT INTO productos(name,create_at,price) VALUES('Balon de futbol de la marca Adida',NOW(),1000);
+
+
+
+INSERT INTO pedidos_item(cash,pedido_id,producto_id) VALUES(1,1,1);
+
+
+
+
+
+
+
+
+
 

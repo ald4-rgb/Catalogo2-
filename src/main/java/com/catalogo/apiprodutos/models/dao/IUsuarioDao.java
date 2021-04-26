@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 //import org.springframework.data.repository.CrudRepository;
 
 import com.catalogo.apiprodutos.models.entity.Region;
+import com.catalogo.apiprodutos.models.entity.Role;
 import com.catalogo.apiprodutos.models.entity.Usuario;
 
 public interface IUsuarioDao extends JpaRepository<Usuario, Long> {
@@ -19,6 +20,11 @@ public interface IUsuarioDao extends JpaRepository<Usuario, Long> {
 	public List<Region>findAllRegiones();
 	
 	public Region findByName(String name);
+	
+	@Query("from Role")
+	public List<Role>findAllRoles();
+	
+	
 		
 	
 }
