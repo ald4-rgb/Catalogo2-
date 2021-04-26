@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { URLSearchParams } from 'url';
 import { User } from '../registro/user';
 
 @Injectable({
@@ -11,7 +10,7 @@ export class AuthService {
 
   private _user:User;
   private _token:string;
-  constructor(private  http:HttpClient) { }
+  constructor(public  http:HttpClient) { }
 
   public get user():User{
     if(this._user != null ){
@@ -34,39 +33,40 @@ export class AuthService {
   }
 
   login(user :User):Observable<any>{
-    const urlEndPoint = "http:localhost:8080/oauth/token";
-    const accreditacion = btoa('angularapp'  +  ":"  +  '12345');
-    const httpHeader = new HttpHeaders({'Content-Type':'application/x-www-form-urlencoded',
-      'Authorization':'Basic'  +  accreditacion});
+    const urlEndPoint = 'http://localhost:8080/oauth/token';
+    const credenciales = btoa('angularapp' + ":"  + '12345');
+    const httpHeaders = new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Basic '+ credenciales 
+    });
     let params = new  URLSearchParams();
-    params.set('grant-type','password');
+    params.set('grant_type','password');
     params.set('username', user.username);
     params.set('password',user.password);
     console.log(params.toString());
-    return this.http.post<any>(urlEndPoint,params.toString(), {headers : httpHeader});
+    return this.http.post<any>(urlEndPoint,params.toString(),{headers: httpHeaders});
   }
 
   saveUser(accessToken:string):void{
     let payload = this.getDataToken(accessToken);
     this._user = new User();
+    this._user.id =payload.id
     this._user.name = payload.name
     this._user.lastName = payload.lastName
     this._user.email = payload.email
     this._user.username = payload.user_name
-    this._user.password = payload.password
-    this._user.roles =  payload.authorities;
+    this._user.role =  payload.authorities;
     sessionStorage.setItem('user',JSON.stringify(this._user));
   }
 
   saveToken(accessToken:string):void{
     this._token = accessToken;
-    sessionStorage.setItem('token',accessToken)
+    sessionStorage.setItem('token',accessToken);
   }
 
   getDataToken(accessToken:string):any{
     if(accessToken != null){
-      return JSON.parse(atob(accessToken.split('.')[1]));
-    }
+      return JSON.parse(atob(accessToken.split(".")[1]));
+     }
       return null;
   }
 
@@ -77,11 +77,24 @@ export class AuthService {
     }
         return false;
   }
-  hasRole(roles:string):boolean{
-    if(this.user.roles.includes(roles)){
+  
+
+
+
+  hasRole(role:string ):boolean{
+    if(this.user.role.includes(role)){
       return true;
     }
-      return false;
+   let result = false;
+   
+
+     
+      this.user.roles.forEach(r =>{
+          if(r.name == role){
+            result = true;
+          }
+      });
+      return result;
   }
   logOut():void{
      this._token = null;

@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { RegistroComponent } from './registro.component';
 
 
-const routes: Routes = [{path:'',component: RegistroComponent}];
+const routes: Routes = [{path:'',component:RegistroComponent}];
 
 @NgModule({
   declarations: [],

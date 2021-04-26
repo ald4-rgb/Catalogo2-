@@ -1,0 +1,48 @@
+<ul class="alert alert-danger"  *ngIf="errores?.length > 0">
+    <li *ngFor="let err of errores ">
+        {{  err }}
+    </li>
+</ul>
+
+<form #edit="ngForm">
+<div class="card mt-2">
+    <div class="card-header">
+        <i class="fa fa-edit">Modificar mis datos</i>     
+        <h4 class="card-title">
+            <a [routerLink]="['/perfil']" class="btn light btn-xs">&laquo; Regreesar a la pagina perfil</a>
+        </h4>  
+    </div>
+    <div class="card-body">
+        <ul class="list-group" >
+            <label>Correo Electronico:</label>
+            <li class="list-group-item">
+                <input type="text" class="form-control" [(ngModel)]="user.email" name="email" #email="ngModel">
+            </li>
+            <label>Nombre de Usuario:</label>   
+            <li class="list-group-item">
+                <input type="text" class="form-control" [(ngModel)]="user.username" name="username" #username="ngModel">
+                <div class="alter alert-danger" *ngIf="username.invalid  && (username.dirty || username.touched)">
+                <div *ngIf="username.errors.required">
+                      Es necesario  que rellenes este campo!...  
+                </div>    
+
+                </div>
+            </li>   
+            <label>Contraseña:</label>   
+            <li class="list-group-item">
+                <input type="password" class="form-control" [(ngModel)]="user.password" name="password" #password="ngModel">
+            </li>
+            <label>Region:</label>   
+           
+            <select [compareWith]="compararRegion"  class="form-control" [(ngModel)]="user.region"  
+                  name="region" #region="ngModel"  style="width:400px;">
+                <option [ngValue]="undefined" >--- seleccione una región ---</option>
+                <option *ngFor="let region of regiones" [ngValue]="region">{{region.name}}</option>
+              </select>
+
+        </ul>
+</div>
+</div>
+<button type="button" class="btn btn-success btn-block" (click)="update()"><i class="fa fa-save"> Guardar datos</i>
+</button>
+</form>

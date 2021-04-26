@@ -1,0 +1,40 @@
+<div class="card bg-light mb-3" >
+    <div class="card-header"> <i class="fa fa-user"></i> Usuarios  </div>
+    <div class="card-body text-dark">
+      <h5 class="card-title"><i class="fa fa-table"></i> Usuarios registrados 
+      <button (click)="onClick()" type="button" class="btn btn-primary">
+       {{ReadMore?"Mostrar tabla de Registro":"Limpiar pantalla"}}
+      </button>
+    </h5>
+      <table class="table table-bordered  table-striped" >
+        <ng-container *ngIf="visible">
+
+        <thead class="thead-dark"  >
+            <th >Foto de perfil</th>
+            <th>Nombre</th>
+            <th>Apellidos</th>
+            <th>región</th>
+            <th>email</th>
+            <th  >Roles de usuario</th>
+
+        </thead>
+        <tbody>              
+            <tr *ngFor="let user of users" >  
+
+                <td > <img *ngIf="!user?.foto" src="http://localhost:8080/images/no-user.png" alt="sin foto"  class="img-thumbnail rounded" style="width: 64px; cursor: pointer;"   />
+    
+                    <img *ngIf="user?.foto" src="http://localhost:8080/catalogo/uploads/img/{{user.foto}}" alt="{{user.foto}}" class="img-thumbnail rounded" style="width: 64px; cursor: pointer;"> </td>
+                <td>{{user.name}}</td>
+                <td>{{user.lastName}} {{user.lastNameSec}} </td>
+                <td>{{user.region.name}}</td>
+                <td>{{user.email}}</td>
+                <td><span *ngFor="let roles of user.roles">{{roles.name + ' '}}</span> </td>
+            </tr>
+        </tbody>
+      </ng-container>
+
+      </table>
+ 
+    
+    </div>
+  </div>

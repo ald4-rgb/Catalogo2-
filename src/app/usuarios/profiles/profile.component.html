@@ -1,0 +1,59 @@
+<mat-card class="profile-card" class="flex-column  ">
+    <i class="fa fa-info"> Detalles de mi perfil </i> 
+
+    <mat-card-header>
+
+    <div class="label bottom"  >
+        <p>Cambiar foto</p>  
+    
+        <img *ngIf="!user?.foto " src="http://localhost:8080/images/no-user.png" alt="sin foto"   (click)="inputImageProfile.click()"/>
+        
+        <img  *ngIf="user?.foto " src="http://localhost:8080/catalogo/uploads/img/{{user.foto}}" alt="{{user.foto}}"  (click)="inputImageProfile.click()"/>
+        <input  hidden type="file" (change)="select($event)"    #inputImageProfile>    
+
+    
+    </div>
+
+    </mat-card-header>
+  
+    <mat-card-content *ngIf="user">
+        <mat-list>
+            <mat-list-item>  
+                <h6> Nombre: {{user.name}}</h6>             
+            </mat-list-item>
+            <mat-divider>
+            </mat-divider>
+            <mat-list-item>
+                <h6> Apellidos: {{user.lastName}} {{user.lastNameSec}}</h6>
+            </mat-list-item>
+            <mat-list-item >
+                <h6>Fecha de nacimento: {{user.dateBorn  | date: "dd/MMMM/yyyy"}}</h6>
+            </mat-list-item>
+            <mat-list-item >
+                <h6>Region: {{user.region?.name}}</h6>
+            </mat-list-item>
+            <mat-divider>
+            </mat-divider>
+            <mat-list-item>
+                <h6>Nombre de Usuario: {{user.username}}</h6>
+            </mat-list-item>
+            <mat-list-item>
+                <h6>Email: {{user.email}}</h6>
+        </mat-list-item>
+              </mat-list>
+    </mat-card-content>
+    <div class="raw">
+        <button type="button" class="btn btn-success btn-block" [routerLink]="['/editar',user?.id]"> <i class="fa fa-edit"> Editar Datos </i>  </button>
+      </div>   
+  </mat-card>
+ <!---<img *ngIf="user?.foto" src="http://localhost:8080/catalogo/uploads/img/{{user.foto}}" alt="{{user.foto}}"  class="img-thumbnail rounded">
+
+ <div class="custom-file">
+
+  <input  (change)="select($event)"   type="file" class="custom-file-input" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04">
+  <label class="custom-file-label" for="inputGroupFile04">seleccionar Foto </label>
+</div>
+
+  <button (click)="uploadPicture()" [disabled]="!select" class="btn btn-outline-secondary" 
+  type="button" id="inputGroupFileAddon04">Subir
+  </button>--->

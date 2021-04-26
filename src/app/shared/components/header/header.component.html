@@ -1,13 +1,48 @@
-<nav class="menu">
-  <ul>
-    <li class="nav-item">
-      <a [routerLink]="['/']"  >Home</a>
-    </li>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <img src="https://cdn.connectamericas.com/sites/default/files/styles/company_public_profile_picture/public/company-100564-1517370092.png?itok=7IYLXmpF"  class="d-inline-block align-top" width="95"  height="50">
 
-    <li class="nav-item">
-      <a [routerLink]="[ '/registrarme']">Registrarme</a>
-    </li>
-  </ul>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#"> Home
+            <span class="sr-only">(current)</span>
+          </a>
+         
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item  nav-right" *ngIf="!authService.isAuthenticated()">
+          <a class="nav-link" >Contacto si hay alguna falla</a>
+        </li>
+        <li class="nav-item" *ngIf="authService.isAuthenticated() && authService.hasRole('ROLE_ADMIN')" >
+          <a class="nav-link"  [routerLink]="['/mostrar']">usuarios</a>
+        </li>
 
+        <li class="nav-item" *ngIf="authService.isAuthenticated() && authService.hasRole('ROLE_USER')">
+          <a class="nav-link" [routerLink]="['/perfil']">perfil</a>
+        </li>
+         
+  
 
+      </ul>
+      <ul class="navbar-nav ">
+      <li class="nav-item  nav-right" *ngIf="!authService.isAuthenticated()">
+        <a class="nav-link" [routerLink]="['/registrarme']">Unirme como usuario</a>
+      </li>
+      <li class="nav-item  nav-right" *ngIf="!authService.isAuthenticated()">
+        <a class="nav-link" [routerLink]="['/login']" href="#">Iniciar Seción</a>
+      </li>
+      <li class="nav-item  nav-right" *ngIf="authService.isAuthenticated()" >
+        <a class="nav-link" (click)="logOut()" href="#">Salir</a>
+      </li>
+      
+      </ul>
+      
+    </div> 
+  
+  </nav>

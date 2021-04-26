@@ -7,13 +7,25 @@ definir el menu*/
   margin: 0;
 }
 
-body{
+li , a ,body{
   color: #333;
   line-height: 1.6;
 }
 
 
+html{
+  position: relative;
+  nav-right: 100%;
+ }
+ 
+body { 
+  height: 60px; 
+  min-height: 100%;
+  margin:   0; font-family:
+   Roboto, "Helvetica Neue", sans-serif; 
 
+}
 
-
-
+.margen{
+    padding: 0;
+}

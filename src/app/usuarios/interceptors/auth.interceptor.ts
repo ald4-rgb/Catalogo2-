@@ -4,11 +4,12 @@ import { Router } from "@angular/router";
 import { Observable, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { AuthService } from "../auth.service";
+import swal from 'sweetalert2'
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor{
 
-  constructor(private authcService:AuthService, private router:Router ){}
+  constructor(private authService:AuthService, private router:Router ){}
 
   intercept(req: HttpRequest<any>, next: HttpHandler):
   Observable<HttpEvent<any>> {
@@ -16,13 +17,15 @@ export class AuthInterceptor implements HttpInterceptor{
     return next.handle(req).pipe(
       catchError(e => {
               if(e.status == 401 ){
-                  if(this.authcService.isAuthenticated){
-                    this.authcService.logOut();
+                    if(this.authService.isAuthenticated()){
+                    this.authService.logOut();
                   }
                   this.router.navigate(['/home']);
               }
               if(e.status == 403 ){
-                 this.router.navigate(['/']);
+                swal.fire('Accesos denegado', `Lociento ${this.authService.user.username} usted no tiene accesos a este recurso`,'warning'   )
+
+                 this.router.navigate(['/home']);
               }
               return throwError(e);
         })

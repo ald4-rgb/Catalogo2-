@@ -1,35 +1,58 @@
+<div class="row">
+  <div class="col-md-auto mx-auto mt-4">
 
-
-
+<h5 class="card-head" >UNETE COMO USUARIO ES GRATIS </h5>
+    <div class="card border-light">
+<div class="card">
+  <div class="card-body text-secondary" >
+<h4>{{titulo}}</h4>
 <form  novalidate class="mt-3"  (ngSubmit)="onSave()"  [formGroup]="registerForm">
   <div class="form-row">
     <div class="form-group col-md-6">
-      <input type="text" class="form-control" placeholder="Name" formControlName="name" [class]="isValidField('name')"  >
-      <div class="invalid-feedback">
+      <input type="text" class="form-control" placeholder="Nombre" formControlName="name" [class]="isValidField('name')"  >
+      <div *ngIf="onSave && registerForm.get('name').errors?.required   " class="invalid-feedback">
         <span *ngIf="registerForm.get('name').errors?.required">
-            Please enter your name
+            Por favor ingresa tu nombre
         </span>
       </div>
     </div>
     <div class="form-group col-md-6" >
-      <input type="text" class="form-control" placeholder="LastName" formControlName="lastName" [class]="isValidField('lastName')"  >
+      <input type="text" class="form-control" placeholder="Apellido Paterno " formControlName="lastName" [class]="isValidField('lastName')"  >
       <div class="invalid-feedback">
         <span *ngIf="registerForm.get('lastName').errors?.required">
-          Please enter your LastName.....
+          Porfavor ingrese su apellido paterno.....
          </span>
        </div>
      </div>
-  </div>
-
+    </div>
   <div class="form-row">
+    <div class="form-group col-md-6" >
+      <input type="text" class="form-control" placeholder="Apellido Materno " formControlName="lastNameSec" [class]="isValidField('lastNameSec')"  >
+      <div class="invalid-feedback">
+        <span *ngIf="registerForm.get('lastNameSec').errors?.required">
+          Porfavor ingrese su apellido materno.....
+         </span>
+       </div>
+    </div>
+    <div class="col-sm-6">
+      <input matInput [matDatepicker]="picker2" class="form-control"formControlName="dateBorn" name="dateBorn"  type="matDatepicker" placeholder="Ingresa tu fecha de nacimineto" [class]="noRequiredHasValue('dateBorn')" style="display:inline; width:200px;">
+      <mat-datepicker-toggle matSuffix [for]="picker2" ></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </div>
+     <div class="col-sm-6">
+       <select [compareWith]="compararRegion"  class="form-control" formControlName="region" name="region"  style="width:400px;">
+        <option [ngValue]="undefined" >--- seleccione una región ---</option>
+        <option *ngFor="let region of regiones" [ngValue]="region">{{region.name}}</option>
+      </select>
+     </div>
      <div class="form-group col-md-6" >
       <input type="email" class="form-control" placeholder="Email" formControlName="email" [class]="isValidField('email')">
         <div class="invalid-feedback">
         <span *ngIf="registerForm.get('email').errors?.required">
-          Please enter your email.....
+          Por favor ingrese un  email.....
          </span>
         <span *ngIf="registerForm.get('email').errors?.pattern">
-          Please enter a valid email for example@gmail.com...
+          Por favor ingrese  un email valido por example@gmail.com...
          </span>
        </div>
      </div>
@@ -38,37 +61,33 @@
       <div class="invalid-feedback">
         <span *ngIf="registerForm.get('username').errors?.required">
           Please enter a username
-
         </span>
       </div>
     </div>
-  </div>
-  <div class="form-row">
     <div class="form-group col-md-6">
-
-      <input type="password" class="form-control" placeholder="password" formControlName="password" [class]="isValidField('password')" >
-
+      <input type="password" class="form-control" placeholder="password" formControlName="password" [class]="isValidField('password')">
       <div class="invalid-feedback">
-
         <span *ngIf="registerForm.get('password').errors?.required">
-          Please generate a password...
+          Porfavor genere una contraseña...
         </span>
         <span *ngIf="registerForm.get('password').errors?.minlength">
-           The password must be longer than {{registerForm.get('password').errors?.minlength?.requiredLength}}
-            characters..
+           La contrseña debe tener minimo  {{registerForm.get('password').errors?.minlength?.requiredLength}}
+            caracteres...
         </span>
         <span *ngIf="registerForm.get('password').errors?.maxlength">
-          The password must be less than {{registerForm.get('password').errors?.maxlength?.requiredLength}}
-           characters..
+          La contraseña debe tener menos de  {{registerForm.get('password').errors?.maxlength?.requiredLength}}
+          caracteres...
        </span>
-
       </div>
-     </div>
+
+       </div>
   </div>
-
-    <button type="submit" class="btn btn-primary btn-block">Save
-
-    </button>
+    <button type="submit" class="btn btn-primary"  style="display:inline; width:250px;">Unirme como Usuario</button>
+  </form>
 
 
-</form>
+</div>
+  </div>
+    </div>
+  </div>
+  </div>
