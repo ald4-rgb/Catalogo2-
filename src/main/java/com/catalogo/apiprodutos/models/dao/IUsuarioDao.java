@@ -14,7 +14,7 @@ import com.catalogo.apiprodutos.models.entity.Usuario;
 public interface IUsuarioDao extends JpaRepository<Usuario, Long> {
 
 	
-	public Usuario findByUsername (String username );
+	public Usuario findByUsername (String username);
 	
 	@Query("from Region")
 	public List<Region>findAllRegiones();

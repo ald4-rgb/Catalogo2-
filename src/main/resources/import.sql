@@ -47,7 +47,7 @@ INSERT INTO `usuarios_roles`(usuario_id, role_id) VALUES(2,1);
 
 
 
-INSERT INTO pedidos(descrip,coment,usuario_id,create_at) VALUES('Equipo personal de computo',null,2,NOW());
+INSERT INTO pedidos(descrip,coment,usuario_id,create_at) VALUES('Equipo personal de computo y Ropa deportiva',null,2,NOW());
 
 INSERT INTO productos(name,create_at,price) VALUES('Hp pavilion core i7',NOW(),25000);
 INSERT INTO productos(name,create_at,price) VALUES('teniss adidas',NOW(),1200);
@@ -61,6 +61,9 @@ INSERT INTO productos(name,create_at,price) VALUES('Balon de futbol de la marca 
 
 
 INSERT INTO pedidos_item(cash,pedido_id,producto_id) VALUES(1,1,1);
+INSERT INTO pedidos_item(cash,pedido_id,producto_id) VALUES(2,1,4);
+INSERT INTO pedidos_item(cash,pedido_id,producto_id) VALUES(1,1,5);
+INSERT INTO pedidos_item(cash,pedido_id,producto_id) VALUES(1,1,7);
 
 
 

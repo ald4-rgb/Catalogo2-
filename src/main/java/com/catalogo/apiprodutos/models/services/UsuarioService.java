@@ -32,9 +32,11 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 	@Autowired
 	private IUsuarioDao usuarioDao;
 	
-	  @Autowired private IPedidoDao pedidoDao;
+	@Autowired 
+	private IPedidoDao pedidoDao;
 	  
-	  @Autowired private IProductoDao productoDao;
+	@Autowired 
+	private IProductoDao productoDao;
 	 
 
 	@Override
@@ -86,31 +88,30 @@ public class UsuarioService implements IUsuarioService, UserDetailsService {
 				.map(role -> new SimpleGrantedAuthority(role.getName()))
 				.peek(authority -> logger.info("Role" + authority.getAuthority())).collect(Collectors.toList());
 
-		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled(),true, true, true,authorities);
-
+		return new User(usuario.getUsername(), usuario.getPassword(), usuario.getEnabled() ,true, true, true, authorities);
 	}
 
 	
 	  @Override
-	  
 	  @Transactional(readOnly = true) 
 	  public Pedido findPedidoById(Long id) {
 	  return pedidoDao.findById(id).orElse(null); }
 	  @Override
 	  
-	  @Transactional public Pedido savePedido(Pedido pedido) { return
-	  pedidoDao.save(pedido); }
+	  @Transactional 
+	  public Pedido savePedido(Pedido pedido) { return
+	  pedidoDao.save(pedido); 
+	  }
 	  
-	  @Override
-	  
+	  @Override	  
 	  @Transactional 
 	  public void deletePedidoById(Long id) {
 	  pedidoDao.deleteById(id); 
 	  }
 	  
 	  @Override
-	  
-	  @Transactional public List<Producto> findProductoByName(String term) {
+	  @Transactional(readOnly = true) 
+	  public List<Producto> findProductoByName(String term) {
 	  return productoDao.findByName(term); }
 	 
 	

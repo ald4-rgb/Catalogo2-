@@ -107,9 +107,13 @@ public class Pedido  implements Serializable{
     	this.items = items; 
     }
 		  
-	public Double getTotla() { Double total = 0.00;
+	public Double getTotal() { 
+		
+		Double total = 0.00;
 		  
-	 for(ItemPedido item: items) { total += item.getAmount(); }
+	 for(ItemPedido item: items) { 
+		 total += item.getAmount(); 
+	 }
 	  
 	 return total; 
 	}
